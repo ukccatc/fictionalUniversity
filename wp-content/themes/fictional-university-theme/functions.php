@@ -26,3 +26,31 @@ function university_features() {
 }
 add_action('after_setup_theme', 'university_features');
 
+//Управление главным цыклом вордпресс.
+function university_adjust_queries($query) {
+    //Query for events
+    if (!is_admin() && is_post_type_archive('event') && $query->is_main_query()) {
+        $today = date('Ymd');
+        $query->set('meta_key', 'event_date');
+        $query->set('orderBy', 'meta_value_num');
+        $query->set('order', 'ASC');
+        $query->set('meta_query', array(
+            array(
+                'key' => 'event_date',
+                'compare' => '>=',
+                'value' => $today,
+                'type' => 'numeric',
+            )
+        ));
+
+    }
+    //Query for programs
+    if (!is_admin() && is_post_type_archive('program') && $query->is_main_query()) {
+        $query->set('posts_per_page', -1);
+        $query->set('orderBy', 'title');
+        $query->set('order', 'DESC');
+
+    }
+}
+add_action('pre_get_posts', 'university_adjust_queries');
+
