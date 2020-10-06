@@ -5,16 +5,11 @@ get_header();
 while ( have_posts() ) {
 	the_post(); ?>
 
-    <div class="page-banner">
-        <div class="page-banner__bg-image"
-             style="background-image: url(<?= get_theme_file_uri( '/images/ocean.jpg' ) ?>);"></div>
-        <div class="page-banner__content container container--narrow">
-            <h1 class="page-banner__title"><?php the_title(); ?></h1>
-            <div class="page-banner__intro">
-                <p>Dont forget to replace me: Single-Event</p>
-            </div>
-        </div>
-    </div>
+	<?php pageBanner( array(
+		'title'    => get_the_title(),
+		'subtitle' => 'All programs'
+	) )
+	?>
 
     <div class="container container--narrow page-section">
         <div class="metabox metabox--position-up metabox--with-home-link">
@@ -52,7 +47,7 @@ while ( have_posts() ) {
 					$relatedProfessors->the_post(); ?>
                     <li class="professor-card__list-item">
                         <a class="professor-card" href="<?php the_permalink(); ?>">
-                            <img class="professor-card__image"src="<?php the_post_thumbnail_url('professorLandscape'); ?>">
+                            <img class="professor-card__image" src="<?php the_post_thumbnail_url('professorLandscape'); ?>">
                             <span class="professor-card__name"><?php the_title(); ?></span>
                         </a>
                     </li>
