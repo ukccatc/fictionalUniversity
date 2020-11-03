@@ -33,16 +33,19 @@ function pageBanner( $args = null ) {
 function university_files() {
 	wp_enqueue_style( 'custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i' );
 	wp_enqueue_style( 'font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
-
 	wp_enqueue_script( 'googleMap', '//maps.googleapis.com/maps/api/js?key=AIzaSyBajZ1eIzakaPMK9YH97Rx0aNuuh7ZOtng', null, '1.0', true );
 
 	if ( strstr( $_SERVER['SERVER_NAME'], 'fictional-university.local' ) ) {
 		wp_enqueue_script( 'main-university-js', 'http://localhost:3000/bundled.js', null, '1.0', true );
 	} else {
-		wp_enqueue_script( 'our-vendors-js', get_theme_file_uri( '/bundled-assets/vendors~scripts.8c97d901916ad616a264.js' ), null, '1.0', true );
-		wp_enqueue_script( 'main-university-js', get_theme_file_uri( '/bundled-assets/scripts.7ff4fe5bd407c802e4cf.js' ), null, '1.0', true );
-		wp_enqueue_style( 'our-main-styles', get_theme_file_uri( '/bundled-assets/styles.7ff4fe5bd407c802e4cf.css' ) );
+		wp_enqueue_script( 'our-vendors-js', get_theme_file_uri( '/bundled-assets/vendors~scripts.9678b4003190d41dd438.js' ), null, '1.0', true );
+		wp_enqueue_script( 'main-university-js', get_theme_file_uri( '/bundled-assets/scripts.f58041e7a71011877f5c.js' ), null, '1.0', true );
+		wp_enqueue_style( 'our-main-styles', get_theme_file_uri( '/bundled-assets/styles.f58041e7a71011877f5c.css' ) );
 	}
+	wp_localize_script( 'main-university-js', 'universityData', array(
+		'root_url' => get_site_url(),
+		'sky'      => 'blue'
+	) );
 }
 
 add_action( 'wp_enqueue_scripts', 'university_files' );
@@ -60,7 +63,7 @@ add_action( 'after_setup_theme', 'university_features' );
 function university_adjust_queries( $query ) {
 
 	if ( ! is_admin() and is_post_type_archive( 'campus' ) and is_main_query() ) {
-		$query->set( 'posts_per_page', -1);
+		$query->set( 'posts_per_page', - 1 );
 	}
 	if ( ! is_admin() and is_post_type_archive( 'program' ) and is_main_query() ) {
 		$query->set( 'orderby', 'title' );
